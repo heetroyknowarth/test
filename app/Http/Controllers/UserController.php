@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Validator;
 
 class UserController extends Controller
 {
@@ -40,18 +41,29 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-            'remember_me' => 'boolean'
-        ]);
+//        $request->validate([
+//            'email' => 'required|string|email',
+//            'password' => 'required|string',
+//            'remember_me' => 'boolean'
+//        ]);
+        $validator = \Illuminate\Support\Facades\Validator::make(
+            [
+                'email' => $request->email,
+                'password' => $request->password,
+            ],
+            [
+                'email' => 'required|string|email|same:field',
+                'password' => 'required|string|same:field',
+                'remember_me' => 'boolean'
+            ]
+        );
 
         $credentials = request(['email', 'password']);
 
         if(!Auth::attempt($credentials))
             return response()->json([
-                'message' => 'Unauthorized'
-            ], 401);
+                "error" => "email id or password does not match "
+            ]);
 
         $user = $request->user();
 
