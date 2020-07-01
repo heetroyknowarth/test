@@ -17,8 +17,8 @@ class UserController extends Controller
     {
         $validate = $this->validateRequest();
 
-        if ($validate){
-            echo 'validated';
+        if ($validate)
+        {
             $user = new User([
                 'name' => $request->name,
                 'email' => $request->email,
