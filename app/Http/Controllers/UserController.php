@@ -70,6 +70,15 @@ class UserController extends Controller
         ]);
     }
 
+    /*
+    Logout function
+    */
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
 
     /*
     Fetch Authorized user data for users profile
