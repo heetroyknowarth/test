@@ -14,15 +14,17 @@ use Illuminate\Http\Request;
 */
 
 
+Route::post('login', 'UserController@login');
 
-Route::post('login', 'ApiController@login');
-Route::post('register', 'ApiController@register');
+Route::post('register', 'UserController@register');
+
 Route::group([
         'middleware' => 'auth:api'
     ], function() {
-        Route::get('logout', 'ApiController@logout');
-        Route::get('user', 'ApiController@user');
-        Route::post('test', 'ApiController@updateProfile');
+        Route::get('logout', 'LogoutController@logout');
 
+        Route::get('fetchUser', 'UserController@user');
+
+        Route::post('update', 'UserController@updateProfile');
     });
 
