@@ -99,7 +99,7 @@ class UserController extends Controller
         if ($request->has('avatar'))
         {
             $avatar = $request->file('avatar');
-            $avatar->store('lol');
+            $avatar->store('UserProfile');
             $file = $avatar->getClientOriginalName();
         }
 
